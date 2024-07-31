@@ -1,17 +1,13 @@
-
-FROM python:latest
-
-WORKDIR /app
-
-COPY requirements.txt /app/
+FROM python:3.10.8-slim-buster
 
 RUN apt update && apt upgrade -y
-RUN apt install git python3-pip ffmpeg -y
+RUN apt install git -y
+COPY requirements.txt /requirements.txt
+
+RUN cd /
+RUN pip3 install -U pip && pip3 install -U -r requirements.txt
+WORKDIR /Rename-Bot-4GB
 
 COPY . .
 
-RUN pip3 install -r requirements.txt
-
-COPY . /app
-
-CMD python3 bot.py
+CMD ["python3", "bot.py"]
